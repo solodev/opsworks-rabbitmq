@@ -28,8 +28,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # Configurable through stack's custom JSON
-rabbitmq_layer = node['rabbitmq']['opsworks']['layer_name']
+#rabbitmq_layer = node['rabbitmq']['opsworks']['layer_name']
+rabbitmq_layer = search(:aws_opsworks_layer, "name:rabbitmq")
+instances = search(:node, "layers:rabbitmq")
 
-instances = node[:opsworks][:layers][rabbitmq_layer][:instances]
 rabbitmq_cluster_nodes = instances.map{ |private_ip, attrs| "rabbit@#{private_ip}" }
 node.set['rabbitmq']['cluster_disk_nodes'] = rabbitmq_cluster_nodes
