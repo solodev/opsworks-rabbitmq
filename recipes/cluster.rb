@@ -31,5 +31,5 @@
 rabbitmq_layer = node['rabbitmq']['opsworks']['layer_name']
 
 instances = node[:opsworks][:layers][rabbitmq_layer][:instances]
-rabbitmq_cluster_nodes = instances.map{ |name, attrs| "rabbit@#{name}" }
+rabbitmq_cluster_nodes = instances.map{ |private_ip, attrs| "rabbit@#{private_ip}" }
 node.set['rabbitmq']['cluster_disk_nodes'] = rabbitmq_cluster_nodes
